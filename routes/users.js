@@ -10,7 +10,6 @@ const User = require('../models/User');
 // @route   POST api/users
 // @desc    Register a user
 // @access  Public
-
 router.post('/', [
     check('name', 'Please add name').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
@@ -27,7 +26,7 @@ router.post('/', [
         let user = await User.findOne({ email });
 
         if(user) {
-            return res.status(400).json({ msg: 'User already exists '});
+            return res.status(400).json({ msg: 'User already exists'});
         }
 
         user = new User({
@@ -47,7 +46,7 @@ router.post('/', [
             }
         }
 
-        jwt.sign(payload, config.get('jwtSecret'), {
+        jwt.sign(payload, config.get('jwtSecret'), { // generate token
             expiresIn: 360000
         }, (err, token) => {
             if(err) throw err;
